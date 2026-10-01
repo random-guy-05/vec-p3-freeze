@@ -84,7 +84,7 @@ def _manifests(bundle: Path) -> list[tuple[Path, dict]]:
         except json.JSONDecodeError as exc:
             raise ValueError(f"invalid manifest JSON: {path}") from exc
         if not isinstance(manifest, dict):
-            raise ValueError(f"invalid manifest object: {path}")
+            raise TypeError(f"invalid manifest object: {path}")
         rows.append((path, manifest))
     return rows
 
@@ -123,8 +123,10 @@ def checklist(bundle: Path) -> str:
     lines = [
         "# VEC P3 Submission Checklist",
         "",
-        "> Verify each frozen artifact immediately before upload. "
-        "This bundle does not replace the official format validator.",
+        (
+            "> Verify each frozen artifact immediately before upload. "
+            "This bundle does not replace the official format validator."
+        ),
         "",
         "| board | slot | file | SHA-256 | note |",
         "|---|---:|---|---|---|",
